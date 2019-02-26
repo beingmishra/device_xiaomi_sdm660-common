@@ -7,3 +7,5 @@ allow hal_camera_default sysfs:file { read };
 allow hal_camera_default default_prop:file { read };
 
 get_prop(hal_camera_default, vendor_video_prop)
+
+allow hal_camera_default persist_camera_prop:property_service set;
