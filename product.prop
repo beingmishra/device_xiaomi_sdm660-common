@@ -24,5 +24,8 @@ ro.config.sdha_apps_bg_min=8
 # Incremental FS
 ro.incremental.enable=1
 
+# Shutdown
+ro.build.shutdown_timeout=2
+
 # Zygote
 persist.device_config.runtime_native.usap_pool_enabled=true
