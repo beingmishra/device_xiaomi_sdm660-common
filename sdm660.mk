@@ -147,8 +147,10 @@ SRC_MEDIA_HAL_DIR := hardware/qcom-caf/$(YOUR_HW_PLATFORM)/media
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
-$(LOCAL_PATH) \
-hardware/qcom-caf/$(YOUR_HW_PLATFORM)
+    $(LOCAL_PATH) \
+    hardware/qcom-caf/$(YOUR_HW_PLATFORM)\
+    vendor/qcom/opensource/commonsys/packages/apps/Bluetooth \
+    vendor/qcom/opensource/commonsys/system/bt/conf
 
 # Biometrics
 PRODUCT_PACKAGES += \
