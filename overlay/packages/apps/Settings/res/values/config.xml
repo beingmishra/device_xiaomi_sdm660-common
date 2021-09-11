@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-       <!-- Smart Charging -->
-    <bool name="config_supportSmartCharging">true</bool>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+   <!-- Smart Charging -->
+   <bool name="config_supportSmartCharging">true</bool>
 
-        <!-- Battery Health -->
-    <bool name="config_supportBatteryHealth">false</bool>
+  <!-- Battery Health -->
+  <string name="config_batDesCap">/sys/class/power_supply/battery/charge_full</string>
+  <string name="config_batCurCap">/sys/class/power_supply/battery/charge_counter</string>
+  <string name="config_batChargeCycle">/sys/class/power_supply/battery/cycle_count</string>
 </resources>
