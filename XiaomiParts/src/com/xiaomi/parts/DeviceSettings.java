@@ -70,9 +70,6 @@ public class DeviceSettings extends PreferenceFragment implements
     public static final String PREF_SPECTRUM = "spectrum";
     public static final String SPECTRUM_SYSTEM_PROPERTY = "persist.spectrum.profile";
 
-    public static final String PREF_ENABLE_DIRAC = "dirac_enabled";
-    public static final String PREF_HEADSET = "dirac_headset_pref";
-    public static final String PREF_PRESET = "dirac_preset_pref";
     public static final String PREF_HEADPHONE_GAIN = "headphone_gain";
     public static final String HEADPHONE_GAIN_PATH = "/sys/kernel/sound_control/headphone_gain";
     public static final String PREF_MICROPHONE_GAIN = "microphone_gain";
@@ -133,9 +130,6 @@ public class DeviceSettings extends PreferenceFragment implements
     private Preference mKcal;
     private SecureSettingListPreference mSPECTRUM;
     private Preference mAmbientPref;
-    private SecureSettingSwitchPreference mEnableDirac;
-    private SecureSettingListPreference mHeadsetType;
-    private SecureSettingListPreference mPreset;
     private CustomSeekBarPreference mHeadphoneGain;
     private CustomSeekBarPreference mMicrophoneGain;
     private CustomSeekBarPreference mEarpieceGain;
@@ -217,29 +211,7 @@ public class DeviceSettings extends PreferenceFragment implements
             mVibratorStrength.setEnabled(VibratorStrengthPreference.isSupported());
         }
 
-        boolean enhancerEnabled;
-        try {
-            enhancerEnabled = DiracService.sDiracUtils.isDiracEnabled();
-        } catch (java.lang.NullPointerException e) {
-            getContext().startService(new Intent(getContext(), DiracService.class));
-            try {
-                enhancerEnabled = DiracService.sDiracUtils.isDiracEnabled();
-            } catch (NullPointerException ne) {
-                // Avoid crash
-                ne.printStackTrace();
-                enhancerEnabled = false;
-            }
         }
-
-        mEnableDirac = (SecureSettingSwitchPreference) findPreference(PREF_ENABLE_DIRAC);
-        mEnableDirac.setOnPreferenceChangeListener(this);
-        mEnableDirac.setChecked(enhancerEnabled);
-
-        mHeadsetType = (SecureSettingListPreference) findPreference(PREF_HEADSET);
-        mHeadsetType.setOnPreferenceChangeListener(this);
-
-        mPreset = (SecureSettingListPreference) findPreference(PREF_PRESET);
-        mPreset.setOnPreferenceChangeListener(this);
 
         if (FileUtils.fileWritable(HIGH_AUDIO_PATH)) {
             mHighAudio = (SecureSettingSwitchPreference) findPreference(HIGH_PERF_AUDIO);
@@ -387,33 +359,6 @@ public class DeviceSettings extends PreferenceFragment implements
 
             case HIGH_PERF_AUDIO:
                 FileUtils.setValue(HIGH_AUDIO_PATH, (boolean) value);
-                break;
-
-            case PREF_ENABLE_DIRAC:
-                try {
-                    DiracService.sDiracUtils.setEnabled((boolean) value);
-                } catch (java.lang.NullPointerException e) {
-                    getContext().startService(new Intent(getContext(), DiracService.class));
-                    DiracService.sDiracUtils.setEnabled((boolean) value);
-                }
-                break;
-
-            case PREF_HEADSET:
-                try {
-                    DiracService.sDiracUtils.setHeadsetType(Integer.parseInt(value.toString()));
-                } catch (java.lang.NullPointerException e) {
-                    getContext().startService(new Intent(getContext(), DiracService.class));
-                    DiracService.sDiracUtils.setHeadsetType(Integer.parseInt(value.toString()));
-                }
-                break;
-
-            case PREF_PRESET:
-                try {
-                    DiracService.sDiracUtils.setLevel(String.valueOf(value));
-                } catch (java.lang.NullPointerException e) {
-                    getContext().startService(new Intent(getContext(), DiracService.class));
-                    DiracService.sDiracUtils.setLevel(String.valueOf(value));
-                }
                 break;
 
             case PREF_HEADPHONE_GAIN:
