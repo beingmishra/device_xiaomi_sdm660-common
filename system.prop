@@ -16,3 +16,6 @@ telephony.lteOnCdmaDevice=1
 
 # Maintainer
 ro.octavi.maintainer=Beingmishra
+
+# System
+persist.sys.binary_xml=false
